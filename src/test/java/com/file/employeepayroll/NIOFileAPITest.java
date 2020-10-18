@@ -24,12 +24,12 @@ class NIOFileAPITest {
 		if (Files.exists(playPath))
 			FileUtils.deleteFiles(playPath.toFile());
 		Assert.assertTrue(Files.notExists(playPath));
-//
-//		// Create directory
+
+		// Create directory
 		Files.createDirectory(playPath);
 		Assert.assertTrue(Files.exists(playPath));
 
-//		// Create Files
+		// Create Files
 		IntStream.range(1, 10).forEach(cntr -> {
 			Path tempFile = Paths.get(playPath + "/temp" + cntr);
 			Assert.assertTrue(Files.notExists(tempFile));
@@ -48,4 +48,10 @@ class NIOFileAPITest {
 
 	}
 
+	@Test
+	public void GivenADirectoryWhenWatchedListsAllTheActivities() throws IOException {
+		Path dir = Paths.get(HOME + "/" + PLAY_WITH_NIO);
+		Files.list(dir).filter(Files::isRegularFile).forEach(System.out::println);
+		new Java8WatchServiceExample(dir).processEvents();
+	}
 }
