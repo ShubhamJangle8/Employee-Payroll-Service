@@ -1,8 +1,16 @@
 package com.file.employeepayroll;
 
+import java.io.IOException;
+import java.nio.file.AccessDeniedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 
 public class EmployeePayrollService {
 	List<EmployeePayroll> empPayrollArray;
@@ -31,13 +39,14 @@ public class EmployeePayrollService {
 		System.out.println(empPayrollArray);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		ArrayList<EmployeePayroll> empPayrollArray = new ArrayList<EmployeePayroll>();
 		Scanner input = new Scanner(System.in);
 		EmployeePayrollService empPayrollService = new EmployeePayrollService(empPayrollArray);
 		System.out.println("Welcome to Employee Payroll Service");
 		empPayrollService.readFromConsole(input);
 		empPayrollService.writetoConsole();
+		
 	}
 	
 }
