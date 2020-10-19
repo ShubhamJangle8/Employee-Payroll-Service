@@ -16,5 +16,5 @@ public class EmployeePayroll {
 	public String toString() {
 		return "EmployeePayroll [id=" + id + ", name=" + name + ", salary=" + salary + "]";
 	}
-	
+
 }

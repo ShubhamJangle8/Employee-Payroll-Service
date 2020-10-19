@@ -35,7 +35,8 @@ class NIOFileAPITest {
 			Assert.assertTrue(Files.notExists(tempFile));
 			try {
 				Files.createFile(tempFile);
-			} catch (IOException e) {
+			} 
+			catch (IOException e) {
 				Assert.assertTrue(Files.exists(tempFile));
 			}
 		});
