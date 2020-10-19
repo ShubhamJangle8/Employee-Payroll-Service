@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import com.file.employeepayroll.EmployeePayrollService.IOService;
+
 public class EmployeePayrollFileIOService {
 	public static String PAYROLL_FILE_NAME = "payroll-file.text";
 
@@ -32,5 +34,14 @@ public class EmployeePayrollFileIOService {
 			e.printStackTrace();
 		}
 		return entries;
+	}
+	
+	public void printData() {
+		try {
+			Files.lines(new File("payroll-file.text").toPath()).forEach(System.out::println);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
