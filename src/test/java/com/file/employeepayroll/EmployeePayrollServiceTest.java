@@ -25,7 +25,18 @@ public class EmployeePayrollServiceTest {
 		EmployeePayroll[] arrayOfEmps = { new EmployeePayroll(1, "Shubham", 20000),
 				new EmployeePayroll(2, "Rohan", 30000), new EmployeePayroll(3, "Aditya", 40000) };
 		employeePayrollService = new EmployeePayrollService(Arrays.asList(arrayOfEmps));
-		employeePayrollService.printData(IOService.FILE_IO);
+		employeePayrollService.printData();
+		long entriesConsole = employeePayrollService.countEntries(IOService.CONSOLE_IO);
+		Assert.assertEquals(3, entriesConsole);
+	}
+	
+	@Test
+	public void given3Employees_WhenReadToConsole_ShouldMatchEmployeeEntries() {
+		EmployeePayrollService employeePayrollService;
+		EmployeePayroll[] arrayOfEmps = { new EmployeePayroll(1, "Shubham", 20000),
+				new EmployeePayroll(2, "Rohan", 30000), new EmployeePayroll(3, "Aditya", 40000) };
+		employeePayrollService = new EmployeePayrollService(Arrays.asList(arrayOfEmps));
+		employeePayrollService.readEmployeeData(IOService.FILE_IO);
 		long entriesConsole = employeePayrollService.countEntries(IOService.CONSOLE_IO);
 		Assert.assertEquals(3, entriesConsole);
 	}

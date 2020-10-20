@@ -23,7 +23,7 @@ public class Java8WatchServiceExample {
 	/**
 	 * Creates a WatchService and registers the given directory
 	 */
-	Java8WatchServiceExample(Path dir) throws IOException {
+	public Java8WatchServiceExample(Path dir) throws IOException {
 		this.watcher = FileSystems.getDefault().newWatchService();
 		this.keys = new HashMap<WatchKey, Path>();
 
@@ -49,11 +49,11 @@ public class Java8WatchServiceExample {
 	void processEvents() {
 		while (true) {
 
-			WatchKey key;
+			WatchKey key = null;
 			try {
 				key = watcher.take();
 			} catch (InterruptedException x) {
-				return;
+				System.out.println("a");
 			}
 
 			Path dir = keys.get(key);
@@ -86,7 +86,7 @@ public class Java8WatchServiceExample {
 					}
 				}
 			}
-
+			
 			boolean valid = key.reset();
 			if (!valid) {
 				keys.remove(key);

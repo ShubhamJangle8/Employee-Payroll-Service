@@ -3,6 +3,8 @@ package com.file.employeepayroll;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,26 +25,6 @@ public class EmployeePayrollService {
 		this.empPayrollArray = empPayrollArray;
 	}
 
-	public void readFromConsole(Scanner input) {
-		System.out.println("Enter the id of Employee");
-		int id = input.nextInt();
-		System.out.println("Enter the name of the Employee");
-		String name = input.next();
-		System.out.println("Enter the salary of the Employee");
-		double salary = input.nextDouble();
-		empPayrollArray.add(new EmployeePayroll(id, name, salary));
-	}
-
-	public static void main(String[] args) throws IOException {
-		ArrayList<EmployeePayroll> empPayrollArray = new ArrayList<EmployeePayroll>();
-		Scanner input = new Scanner(System.in);
-		EmployeePayrollService empPayrollService = new EmployeePayrollService(empPayrollArray);
-		System.out.println("Welcome to Employee Payroll Service");
-		empPayrollService.readFromConsole(input);
-		empPayrollService.writeEmployeePayrollData(IOService.FILE_IO);
-
-	}
-
 	public void writeEmployeePayrollData(IOService ioService) {
 		if (ioService == IOService.CONSOLE_IO) {
 			System.out.println("The employee details are : " + empPayrollArray);
@@ -61,13 +43,37 @@ public class EmployeePayrollService {
 		return entries;
 	}
 
-	public void printData(IOService fileIo) {
+	public void printData() {
 		try {
 			Files.lines(new File("payroll-file.text").toPath()).forEach(System.out::println);
-		}
-		catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public void readEmployeeData(IOService ioService) {
+		Scanner scanner = new Scanner(System.in);
+		if (ioService.equals(IOService.CONSOLE_IO)) {
+			System.out.println("Enter Employee ID : ");
+			int id = scanner.nextInt();
+			scanner.nextLine();
+			System.out.println("Enter Employee Name : ");
+			String name = scanner.nextLine();
+			System.out.println("Enter Employee Salary : ");
+			double salary = scanner.nextDouble();
+			empPayrollArray.add(new EmployeePayroll(id, name, salary));
+		} else if (ioService.equals(IOService.FILE_IO)) {
+			System.out.println("Reading data from file");
+			new EmployeePayrollFileIOService().printData();
+		}
+	}
+
+	public static void main(String[] args) throws IOException {
+		ArrayList<EmployeePayroll> empPayrollArray = new ArrayList<>();
+		Scanner input = new Scanner(System.in);
+		EmployeePayrollService empPayrollService = new EmployeePayrollService(empPayrollArray);
+		System.out.println("Welcome to Employee Payroll Service");
+		empPayrollService.readEmployeeData(IOService.FILE_IO);
+		empPayrollService.writeEmployeePayrollData(IOService.FILE_IO);
+	}
 }
